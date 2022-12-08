@@ -66,7 +66,32 @@ function ViewComplaint(req, res, next){
     }
 }
 
+
+function EditComplaint(req, res, next) {
+    try{
+        
+        if(req.body){
+            var id = req.params.id;
+            var meta = { postData:req.body,id:id };
+            var data = req.body;
+            var sql= `UPDATE complaints set complaint_desc='${data.complaint_desc}', name='${data.name}', email='${data.email}' WHERE id=${id}` ;
+            sql_connection.query(sql, function (err, result) {
+                if (err) throw err;
+                res.json({message:"one row updated",meta}).status(200);
+              });           
+        }
+        else{
+            throw "There is no data posted";
+        }
+
+    }
+    catch (err) {
+        console.error(`Error while getting quotes `, err.message);
+        next(err);
+    }
+}
+
 module.exports = {
-    GetList, AddComplaint, ViewComplaint
+    GetList, AddComplaint, ViewComplaint, EditComplaint
 }
 

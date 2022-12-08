@@ -11,6 +11,7 @@ router.get('/complaints', complaints.GetList);
 // router.post('/complaints',urlencodedParser, complaints.AddComplaint);
 router.post('/complaints', complaints.AddComplaint);
 router.get('/complaints/:id', complaints.ViewComplaint);
+router.post('/complaints/:id', complaints.EditComplaint);
 
   
 module.exports = router;
