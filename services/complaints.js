@@ -1,3 +1,4 @@
+const { response } = require('express');
 var sql_connection = require('./../routes/db')
 
 function GetList(req, res, next) {
@@ -49,7 +50,23 @@ function AddComplaint(req, res, next) {
         next(err);
     }
 }
+function ViewComplaint(req, res, next){
+    try{
+        var id = req.params.id;
+        var sql_query="SELECT * FROM complaints WHERE id ="+id;
+        sql_connection.query(sql_query, function (err, result) {
+            if (err) throw err;
+            res.json({message:"one row fetched",data:result}).status(200);
+          });  
+   
+    }
+    catch (err) {
+        console.error(`Error while getting quotes `, err.message);
+        next(err);
+    }
+}
 
 module.exports = {
-    GetList, AddComplaint
+    GetList, AddComplaint, ViewComplaint
 }
+
