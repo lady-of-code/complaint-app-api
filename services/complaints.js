@@ -91,7 +91,33 @@ function EditComplaint(req, res, next) {
     }
 }
 
+
+
+function DeleteComplaint(req, res, next) {
+    try{
+        
+        if(req.body){
+            var id = req.params.id;
+            var meta = { postData:req.body,id:id };
+            var data = req.body;
+            var sql= `DELETE from complaints WHERE id=${id}` ;
+            sql_connection.query(sql, function (err, result) {
+                if (err) throw err;
+                res.json({message:"one row deleted",meta}).status(200);
+              });           
+        }
+        else{
+            throw "There is no data posted";
+        }
+
+    }
+    catch (err) {
+        console.error(`Error while getting quotes `, err.message);
+        next(err);
+    }
+}
+
 module.exports = {
-    GetList, AddComplaint, ViewComplaint, EditComplaint
+    GetList, AddComplaint, ViewComplaint, EditComplaint, DeleteComplaint
 }
 
